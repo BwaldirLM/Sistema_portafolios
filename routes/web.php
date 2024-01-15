@@ -1,4 +1,6 @@
 <?php
+use App\Http\Controllers\CargaAcademicaController;
+
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +20,11 @@ use App\Http\Controllers\CursoController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/carga-academica/{idDocente}', [CargaAcademicaController::class, 'mostrarCargaAcademica']);
+
+Route::resource('cursos',CursoController::class);
 Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/curso/{id}', [CursoController::class, 'show'])->name('curso.show');

@@ -1,25 +1,51 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <title>Detalles del Curso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
-        <div class="row bg-light">
-            <div class="col-sm-8 col-lg-6">
-                <h1>titulos</h1>
-            </div>
-            <div class="col-sm-8 col-lg-4">
-                <h1>botones</h1>
-            </div>
-        </div>
+        .container {
+            width: 50%;
+            margin: 2rem auto;
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #446688;
+        }
+
+        p {
+            margin: 0.5rem 0;
+        }
+
+        strong {
+            color: #446688;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalles del Curso</h1>
+
+        <p><strong>Código del Curso:</strong> {{ $curso->CodigoCurso }}</p>
+        <p><strong>Nombre del Curso:</strong> {{ $curso->NombreCurso }}</p>
+        <p><strong>Créditos:</strong> {{ $curso->Creditos }}</p>
+
+        <!-- Agrega más detalles según tus necesidades -->
     </div>
-</x-app-layout>
+</body>
+</html>

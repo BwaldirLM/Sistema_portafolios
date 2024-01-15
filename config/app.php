@@ -141,7 +141,11 @@ return [
 
     'maintenance' => [
         'driver' => 'file',
+<<<<<<< HEAD
+        // 'store'  => 'redis',
+=======
         // 'store' => 'redis',
+>>>>>>> upstream/master
     ],
 
     /*
