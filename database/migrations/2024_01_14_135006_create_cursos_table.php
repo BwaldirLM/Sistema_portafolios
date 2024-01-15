@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('cursos', function (Blueprint $table) {
             $table->string('IDCurso', 10)->primary();            $table->unsignedBigInteger('IDCargaAcademica');
-            $table->string('CodigoCurso', 20);
             $table->string('NombreCurso', 50);
             $table->integer('Creditos');
             $table->enum('TipoClase', ['T-P', 'T', 'P']);

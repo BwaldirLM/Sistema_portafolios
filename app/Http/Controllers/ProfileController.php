@@ -16,14 +16,19 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $docentes = User::join('cursos', 'users.id', '=', 'cursos.IDDocente')
-        ->select('users.Nombre', 'cursos.IDCurso')
-        ->get();
-    
-        //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
-        //dd($docentes);
-        return view('dashboard', ['docentes' => $docentes]);
+        //Muestra si el usuario es un revisor
+        if(Auth::user()->TipoUsuario == 'revisor'){
+            $docentes = User::join('carga_academicas', 'users.id', '=', 'carga_academicas.IDDocente')
+            ->join('cursos', 'carga_academicas.IDCargaAcademica', '=', 'cursos.IDCargaAcademica')
+            ->select('users.Nombre', 'cursos.IDCurso')
+            ->where('carga_academicas.IDRevisor', '=', Auth::user()->id)
+            ->get();
+            //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
+            //dd($docentes);
+            return view('dashboard', ['docentes' => $docentes]);
+        }
     }
+       
     /**
      * Display the user's profile form.
      */

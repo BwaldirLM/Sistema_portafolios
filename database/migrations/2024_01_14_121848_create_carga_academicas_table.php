@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('AnioAcademico', 10);
             $table->timestamps();
 
-            $table->foreign('IDDocente')->references('IDUsuario')->on('usuarios');
-            $table->foreign('IDRevisor')->references('IDUsuario')->on('usuarios');
+            $table->foreign('IDDocente')->references('id')->on('users');
+            $table->foreign('IDRevisor')->references('id')->on('users');
         });
     }
 
