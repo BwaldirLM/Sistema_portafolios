@@ -29,11 +29,7 @@ return [
     | mailers below. You are free to add additional mailers as required.
     |
     | Supported: "smtp", "sendmail", "mailgun", "ses", "ses-v2",
-<<<<<<< HEAD
     |            "postmark", "log", "array", "failover"
-=======
-    |            "postmark", "log", "array", "failover", "roundrobin"
->>>>>>> upstream/master
     |
     */
 
@@ -54,26 +50,16 @@ return [
             'transport' => 'ses',
         ],
 
-<<<<<<< HEAD
-        'mailgun' => [
-            'transport' => 'mailgun',
-=======
         'postmark' => [
             'transport' => 'postmark',
             // 'message_stream_id' => null,
->>>>>>> upstream/master
             // 'client' => [
             //     'timeout' => 5,
             // ],
         ],
 
-<<<<<<< HEAD
-        'postmark' => [
-            'transport' => 'postmark',
-=======
         'mailgun' => [
             'transport' => 'mailgun',
->>>>>>> upstream/master
             // 'client' => [
             //     'timeout' => 5,
             // ],
@@ -100,8 +86,6 @@ return [
                 'log',
             ],
         ],
-<<<<<<< HEAD
-=======
 
         'roundrobin' => [
             'transport' => 'roundrobin',
@@ -110,7 +94,6 @@ return [
                 'postmark',
             ],
         ],
->>>>>>> upstream/master
     ],
 
     /*
