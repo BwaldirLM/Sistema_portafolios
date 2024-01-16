@@ -18,7 +18,7 @@ class User extends Authenticatable //implements MustVerifyEmail
      * @var array<int, string>
      */
     protected $fillable = [
-        'Nombre',
+        'name',
         'email',
         'password',
     ];
@@ -45,7 +45,11 @@ class User extends Authenticatable //implements MustVerifyEmail
 
     public function cursos()
     {
-        return $this->hasMany(Curso::class, 'IDDocente', 'id');
+        return $this->hasManyThrough(Curso::class, CargaAcademica::class, 'IDDocente', 'IDCargaAcademica');
+    }
+    public function cargaAcademicas()
+    {
+        return $this->hasMany(CargaAcademica::class, 'IDDocente');
     }
 
 }

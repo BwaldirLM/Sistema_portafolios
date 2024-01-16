@@ -80,12 +80,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>{{ $docente->Nombre }} - Carga Académica</h1>
+        <h1>{{ $docente->name }} - Carga Académica</h1>
 
         <div class="card">
             <div class="card-body">
                 <h2>Revisor Asignado:</h2>
-                <p>{{ $cargaAcademica->revisor->Nombre ?? 'N/A' }}</p>
+                <p>{{ $cargaAcademica->revisor->name ?? 'N/A' }}</p>
             </div>
         </div>
 
