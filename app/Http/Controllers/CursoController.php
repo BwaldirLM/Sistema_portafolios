@@ -8,6 +8,7 @@ use App\Models\Evaluaciones;
 use App\Models\Curso;
 use App\Http\Requests\StoreCursoRequest;
 use App\Http\Requests\UpdateCursoRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CursoController extends Controller
 {
@@ -40,22 +41,46 @@ class CursoController extends Controller
      */
     public function show($curso)
     {
-        $curso = Curso::find($curso);
+        if(Auth::user()->TipoUsuario == 'docente'){
+            $curso = Curso::find($curso);
+            
 
-        if (!$curso) {
-            abort(404); // Manejar el caso en que el curso no se encuentre
+            if (!$curso) {
+                abort(404); // Manejar el caso en que el curso no se encuentre
+            }
+
+            // Recuperar datos de PresentacionPortafolio
+            $presentacionPortafolio = PresentacionPortafolio::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+            // Recuperar datos de Contenido
+            $contenido = Contenido::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+            // Recuperar datos de Evaluaciones
+            $evaluaciones = Evaluaciones::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+            return view('cursos.show', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
+        }else{
+            $curso = Curso::find($curso)
+            ->select('IDCurso', 'NombreCurso', 'Creditos', 'TipoClase', 'IDCargaAcademica')
+            ->first();
+            $docente = CargaAcademica::where('IDCargaAcademica',$curso->IDCargaAcademica)
+            ->join('users', 'carga_academicas.IDDocente', '=', 'users.id')
+            ->select('Nombre')
+            ->first();
+            if (!$curso) {
+                abort(404); // Manejar el caso en que el curso no se encuentre
+            }
+            // Recuperar datos de PresentacionPortafolio
+            $presentacionPortafolio = PresentacionPortafolio::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+            // Recuperar datos de Contenido
+            $contenido = Contenido::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+            // Recuperar datos de Evaluaciones
+            $evaluaciones = Evaluaciones::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+            return view('cursos.show', compact('curso', 'docente', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
         }
-
-        // Recuperar datos de PresentacionPortafolio
-        $presentacionPortafolio = PresentacionPortafolio::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
-
-        // Recuperar datos de Contenido
-        $contenido = Contenido::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
-
-        // Recuperar datos de Evaluaciones
-        $evaluaciones = Evaluaciones::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
-
-        return view('cursos.show', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
     }
 
 
