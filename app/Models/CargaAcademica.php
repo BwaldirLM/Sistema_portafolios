@@ -13,7 +13,11 @@ class CargaAcademica extends Model
     }
     public function revisor()
     {
-        return $this->belongsTo(Usuario::class, 'IDRevisor', 'IDUsuario');
+        return $this->belongsTo(User::class, 'IDRevisor', 'id');
+    }
+    public function docente()
+    {
+        return $this->belongsTo(User::class, 'IDDocente', 'id');
     }
     use HasFactory;
 }

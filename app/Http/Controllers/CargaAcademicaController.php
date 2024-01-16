@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\CargaAcademica;
 use App\Models\Curso;
-use App\Models\Usuario;
+use App\Models\User;
 use App\Http\Requests\StoreCargaAcademicaRequest;
 use App\Http\Requests\UpdateCargaAcademicaRequest;
 
@@ -14,10 +14,10 @@ class CargaAcademicaController extends Controller
      */
     public function mostrarCargaAcademica($idDocente)
     {
-        $docente = Usuario::find($idDocente);
+        $docente = User::find($idDocente);
 
-        if (!$docente || $docente->TipoUsuario !== 'Docente') {
-            abort(404); // Manejo del caso en que el usuario no sea un docente
+        if (!$docente || $docente->TipoUsuario !== 'docente') {
+            abort(404); // Manejo del caso en que el User no sea un docente
         }
 
         $cargaAcademica = CargaAcademica::with('revisor','cursos')->where('IDDocente', $idDocente)->first();
