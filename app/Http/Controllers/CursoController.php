@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\CargaAcademica;
+use App\Models\PresentacionPortafolio;
+use App\Models\Contenido;
+use App\Models\Evaluaciones;
 use App\Models\Curso;
 use App\Http\Requests\StoreCursoRequest;
 use App\Http\Requests\UpdateCursoRequest;
@@ -39,12 +42,22 @@ class CursoController extends Controller
     {
         $curso = Curso::find($curso);
 
-        if ($curso) {
-            return view('cursos.show', compact('curso'));
-        } else {
+        if (!$curso) {
             abort(404); // Manejar el caso en que el curso no se encuentre
         }
+
+        // Recuperar datos de PresentacionPortafolio
+        $presentacionPortafolio = PresentacionPortafolio::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+        // Recuperar datos de Contenido
+        $contenido = Contenido::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+        // Recuperar datos de Evaluaciones
+        $evaluaciones = Evaluaciones::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
+
+        return view('cursos.show', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
     }
+
 
 
     /**
