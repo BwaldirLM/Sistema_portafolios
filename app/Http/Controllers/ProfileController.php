@@ -20,7 +20,7 @@ class ProfileController extends Controller
         if (Auth::user()->TipoUsuario == 'revisor') {
             $docentes = User::join('carga_academicas', 'users.id', '=', 'carga_academicas.IDDocente')
                 ->join('cursos', 'carga_academicas.IDCargaAcademica', '=', 'cursos.IDCargaAcademica')
-                ->select('users.name', 'cursos.IDCurso')
+                ->select('users.Nombre', 'cursos.IDCurso')
                 ->where('carga_academicas.IDRevisor', '=', Auth::user()->id)
                 ->get();
             // User::where('TipoUsuario', 'Docente')->with('cursos')->get();

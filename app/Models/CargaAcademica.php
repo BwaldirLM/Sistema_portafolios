@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class CargaAcademica extends Model
 {
+    protected $primaryKey = 'IDCargaAcademica';
+    
     public function cursos()
     {
         return $this->hasMany(Curso::class, 'IDCargaAcademica', 'IDCargaAcademica');

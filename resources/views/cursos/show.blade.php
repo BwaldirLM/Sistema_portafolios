@@ -107,7 +107,7 @@
         @else
             <h1>Revision</h1>
 
-            <p><strong>Docente:</strong> {{ $docente->Nombre }}</p>
+            <p><strong>Docente:</strong> {{ $curso->Nombre }}</p>
             <p><strong>Codigo del curso:</strong> {{ $curso->IDCurso }}</p>
             <p><strong>Curso:</strong> {{ $curso->NombreCurso }}</p>
             <p><strong>Creditos:</strong> {{$curso->Creditos}}</p>

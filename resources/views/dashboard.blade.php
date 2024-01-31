@@ -14,7 +14,7 @@
                     <div class="list-group-item list-group-item-action">
                         <div class="d-flex justify-content-between">
                             <div>
-                                <h5 class="mb-1"><strong>{{ $loop->iteration }}.</strong> {{ $docente->name }}</h5>
+                                <h5 class="mb-1"><strong>{{ $loop->iteration }}.</strong> {{ $docente->Nombre }}</h5>
                             </div>
                             <a href="{{ route('curso.show', $docente->IDCurso) }}" class="btn btn-primary">Ver</a>
                         </div>
