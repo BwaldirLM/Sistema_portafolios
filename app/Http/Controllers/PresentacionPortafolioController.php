@@ -2,65 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PresentacionPortafolio;
-use App\Http\Requests\StorePresentacionPortafolioRequest;
-use App\Http\Requests\UpdatePresentacionPortafolioRequest;
+use App\Models\PresentacionPortafolio2;
+use Illuminate\Http\Request;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+use App\Models\User;
 
 class PresentacionPortafolioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        //Muestra si el usuario es un revisor
+        if(Auth::user()->TipoUsuario == 'revisor'){
+            $docentes = User::join('carga_academicas', 'users.id', '=', 'carga_academicas.IDDocente')
+            ->join('cursos', 'carga_academicas.IDCargaAcademica', '=', 'cursos.IDCargaAcademica')
+            ->select('users.Nombre', 'cursos.IDCurso')
+            ->where('carga_academicas.IDRevisor', '=', Auth::user()->id)
+            ->get();
+            //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
+            //dd($docentes);
+            return view('presentacion.presentacionportafolio', ['docentes' => $docentes]);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request)
     {
-        //
-    }
+        // Recuperar las secciones desde el formulario o desde donde tengas definidas las secciones
+        $secciones = ['Caratula', 'CargaAcademica', 'FilosofiaDocente', 'CV'];
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePresentacionPortafolioRequest $request)
-    {
-        //
-    }
+        // Crear una instancia del modelo PresentacionPortafolio2
+        $presentacion = new PresentacionPortafolio2();
+        
+        // Asignar valores a las propiedades del modelo según la selección del usuario
+        $presentacion->IDCargaAcademica = 1; // Asigna el valor adecuado según tus necesidades
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PresentacionPortafolio $presentacionPortafolio)
-    {
-        //
-    }
+        foreach ($secciones as $seccion) {
+            $campo = strtolower($seccion);
+            $valor = $request->input($campo, 'No');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PresentacionPortafolio $presentacionPortafolio)
-    {
-        //
-    }
+            // Asignar valores según la lógica de Totalmente, Parcialmente, No
+            $presentacion->{$seccion} = ($valor == 'Totalmente') ? 2 : (($valor == 'Parcialmente') ? 1 : 0);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePresentacionPortafolioRequest $request, PresentacionPortafolio $presentacionPortafolio)
-    {
-        //
-    }
+        // Guardar en la base de datos
+        $presentacion->save();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PresentacionPortafolio $presentacionPortafolio)
-    {
-        //
+        // Puedes redirigir al usuario a donde desees después de guardar los datos
+        //return redirect()->back()->with('success', 'Datos guardados exitosamente');
+        return redirect()->route('dashboard')->with('success', 'Datos guardados exitosamente');
+
     }
 }

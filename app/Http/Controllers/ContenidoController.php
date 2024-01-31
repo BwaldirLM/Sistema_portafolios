@@ -1,66 +1,97 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Contenido;
-use App\Http\Requests\StoreContenidoRequest;
-use App\Http\Requests\UpdateContenidoRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
+use App\Models\User;
+use App\Models\Evaluacion;
 
 class ContenidoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
-        //
+        //Muestra si el usuario es un revisor
+        if(Auth::user()->TipoUsuario == 'revisor'){
+            $docentes = User::join('carga_academicas', 'users.id', '=', 'carga_academicas.IDDocente')
+            ->join('cursos', 'carga_academicas.IDCargaAcademica', '=', 'cursos.IDCargaAcademica')
+            ->select('users.Nombre', 'cursos.IDCurso')
+            ->where('carga_academicas.IDRevisor', '=', Auth::user()->id)
+            ->get();
+            //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
+            //dd($docentes);
+            return view('presentacion.contenido', ['docentes' => $docentes]);
+        }
+    }
+    public function index2()
+    {
+        //Muestra si el usuario es un revisor
+        if(Auth::user()->TipoUsuario == 'revisor'){
+            $docentes = User::join('carga_academicas', 'users.id', '=', 'carga_academicas.IDDocente')
+            ->join('cursos', 'carga_academicas.IDCargaAcademica', '=', 'cursos.IDCargaAcademica')
+            ->select('users.Nombre', 'cursos.IDCurso')
+            ->where('carga_academicas.IDRevisor', '=', Auth::user()->id)
+            ->get();
+            //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
+            //dd($docentes);
+            return view('presentacion.evaluaciones', ['docentes' => $docentes]);
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(Request $request)
     {
-        //
+        // Recuperar las secciones desde el formulario o desde donde tengas definidas las secciones
+        $secciones = ['Silabo', 'Avance', 'Asistencia'];
+
+        // Crear una instancia del modelo PresentacionPortafolio2
+        $contenido = new Contenido();
+        
+        // Asignar valores a las propiedades del modelo según la selección del usuario
+        $contenido->IDCargaAcademica = 7; // Asigna el valor adecuado según tus necesidades
+
+        foreach ($secciones as $seccion) {
+            $campo = strtolower($seccion);
+            $valor = $request->input($campo, 'No');
+
+            // Asignar valores según la lógica de Totalmente, Parcialmente, No
+            $contenido->{$seccion} = ($valor == 'Totalmente') ? 2 : (($valor == 'Parcialmente') ? 1 : 0);
+        }
+
+        // Guardar en la base de datos
+        $contenido->save();
+
+        // Puedes redirigir al usuario a donde desees después de guardar los datos
+        //return redirect()->back()->with('success', 'Datos guardados exitosamente');
+        return redirect()->route('dashboard')->with('success', 'Datos guardados exitosamente');
+
+    }
+    public function store2(Request $request)
+    {
+        // Recuperar las secciones desde el formulario o desde donde las tengas definidas
+        $secciones = ['EvaluacionEntrada', 'PrimeraParcial', 'SegundaParcial', 'TerceraParcial', 'Sustitutorio'];
+
+        // Crear una instancia del modelo Evaluacion
+        $evaluacion = new Evaluacion();
+        $evaluacion->IDCargaAcademica = 7; // Asigna el valor adecuado según tus necesidades
+
+        foreach ($secciones as $seccion) {
+            $campo = strtolower(str_replace(' ', '', $seccion));
+            $valor = $request->input($campo, 'No');
+
+            // Asignar valores según la lógica de Totalmente, Parcialmente, No
+            $evaluacion->{$campo} = ($valor == 'Totalmente') ? '2' : (($valor == 'Parcialmente') ? '1' : '0');
+        }
+
+        // Guardar en la base de datos
+        $evaluacion->save();
+
+        // Puedes redirigir al usuario a donde desees después de guardar los datos
+        return redirect()->route('dashboard')->with('success', 'Datos guardados exitosamente');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreContenidoRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contenido $contenido)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contenido $contenido)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateContenidoRequest $request, Contenido $contenido)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contenido $contenido)
-    {
-        //
-    }
 }

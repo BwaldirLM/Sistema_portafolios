@@ -58,7 +58,7 @@ class CursoController extends Controller
             // Recuperar datos de Evaluaciones
             $evaluaciones = Evaluaciones::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
 
-            return view('cursos.show', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
+            return view('cursos.showDocente', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
         }else{            
 
             $curso = Curso::with(['cargaAcademica.docente'])
@@ -80,7 +80,7 @@ class CursoController extends Controller
             // Recuperar datos de Evaluaciones
             $evaluaciones = Evaluaciones::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
 
-            return view('cursos.show', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
+            return view('cursos.showRevisor', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
         }
     }
 

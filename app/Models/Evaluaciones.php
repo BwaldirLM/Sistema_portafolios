@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evaluaciones extends Model
 {
-    use HasFactory;
+    protected $table = 'evaluaciones';
+
+    protected $fillable = [
+        'IDCargaAcademica',
+        'EvaluacionEntrada',
+        'PrimeraParcial',
+        'SegundaParcial',
+        'TerceraParcial',
+        'Sustitutorio',
+    ];
 }

@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\CargaAcademicaController;
-
+use App\Http\Controllers\PresentacionPortafolioController;
+use App\Http\Controllers\ContenidoController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,12 @@ Route::resource('cursos',CursoController::class);
 Route::get('/dashboard', [ProfileController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/curso/{id}', [CursoController::class, 'show'])->name('curso.show');
+Route::get('/presentacionportafolio', [PresentacionPortafolioController::class, 'index'])->name('presentacionportafolio.index');
+Route::post('/contenido', [ContenidoController::class, 'store'])->name('contenido.store');
+Route::get('/contenido', [ContenidoController::class, 'index'])->name('contenido.index');
+Route::post('/presentacionportafolio', [PresentacionPortafolioController::class, 'store'])->name('presentacionportafolio.store');
+Route::get('/evaluaciones', [ContenidoController::class, 'index2'])->name('evaluaciones.index');
+Route::post('/evaluaciones', [ContenidoController::class, 'store2'])->name('evaluaciones.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

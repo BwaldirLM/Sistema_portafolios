@@ -11,93 +11,34 @@
     <div class="container">
         <h1>PRESENTACION DE PORTAFOLIO</h1>
         
-        <form>
-           <!-- Añadir el token CSRF para protección contra ataques CSRF -->
-            <!-- Sección para Caratula -->
-            <div class="section">
-                <div class="question">
-                    <h2>Caratula</h2>
-                    <div class="options">
-                        <label>
-                            <input type="radio" name="caratula" value="No">
-                            No
-                        </label>
-                        <label>
-                            <input type="radio" name="caratula" value="Parcialmente">
-                            Parcialmente
-                        </label>
-                        <label>
-                            <input type="radio" name="caratula" value="Totalmente" checked>
-                            Totalmente
-                        </label>
-                    </div>
-                </div>
-            </div>
+        <form action="{{ route('presentacionportafolio.store') }}" method="POST">
+            @csrf
 
-            <!-- Repite la estructura para otras secciones -->
-            
-            <!-- Sección para Carga Academica -->
-            <div class="section">
-                <div class="question">
-                    <h2>Carga Academica</h2>
-                    <div class="options">
-                        <label>
-                            <input type="radio" name="carga_academica" value="No">
-                            No
-                        </label>
-                        <label>
-                            <input type="radio" name="carga_academica" value="Parcialmente">
-                            Parcialmente
-                        </label>
-                        <label>
-                            <input type="radio" name="carga_academica" value="Totalmente" checked>
-                            Totalmente
-                        </label>
-                    </div>
-                </div>
-            </div>
+            <?php
+                $secciones = ['Caratula', 'CargaAcademica', 'FilosofiaDocente', 'CV'];
+            ?>
 
-            <!-- Sección para Filosofía Docente -->
-            <div class="section">
-                <div class="question">
-                    <h2>Filosofía Docente</h2>
-                    <div class="options">
-                        <label>
-                            <input type="radio" name="filosofia_docente" value="No">
-                            No
-                        </label>
-                        <label>
-                            <input type="radio" name="filosofia_docente" value="Parcialmente">
-                            Parcialmente
-                        </label>
-                        <label>
-                            <input type="radio" name="filosofia_docente" value="Totalmente" checked>
-                            Totalmente
-                        </label>
+            @foreach($secciones as $seccion)
+                <div class="section">
+                    <div class="question">
+                        <h2>{{ $seccion }}</h2>
+                        <div class="options">
+                            <label>
+                                <input type="radio" name="{{ strtolower($seccion) }}" value="No">
+                                No
+                            </label>
+                            <label>
+                                <input type="radio" name="{{ strtolower($seccion) }}" value="Parcialmente">
+                                Parcialmente
+                            </label>
+                            <label>
+                                <input type="radio" name="{{ strtolower($seccion) }}" value="Totalmente" checked>
+                                Totalmente
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Sección para CV -->
-            <div class="section">
-                <div class="question">
-                    <h2>CV</h2>
-                    <div class="options">
-                        <label>
-                            <input type="radio" name="cv" value="No">
-                            No
-                        </label>
-                        <label>
-                            <input type="radio" name="cv" value="Parcialmente">
-                            Parcialmente
-                        </label>
-                        <label>
-                            <input type="radio" name="cv" value="Totalmente" checked>
-                            Totalmente
-                        </label>
-                    </div>
-                </div>
-            </div>
+            @endforeach
 
             <div class="section">
                 <div class="question2">
