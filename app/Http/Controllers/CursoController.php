@@ -59,23 +59,14 @@ class CursoController extends Controller
             $evaluaciones = Evaluaciones::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
 
             return view('cursos.show', compact('curso', 'presentacionPortafolio', 'contenido', 'evaluaciones'));
-        }else{
-            //$curso = Curso::find($codigo)
-            //->select('IDCurso', 'NombreCurso', 'Creditos', 'TipoClase', 'IDCargaAcademica')
-            //->first();
+        }else{            
 
             $curso = Curso::with(['cargaAcademica.docente'])
-            //->select('IDCurso', 'NombreCurso', 'Creditos', 'TipoClase')
             ->where('IDCurso', $codigo)
             ->first();
             $curso->Nombre = $curso->cargaAcademica->docente->Nombre;
-            echo $curso;
-            //Curso::join('carga_academicas', 'cursos.IDCargaAcademica', '=', 'carga_academicas.IDCargaAcademica')
-            //->join('users', 'carga_academicas.IDDocente', '=', 'users.id')
-            //->select('users.Nombre','IDCurso', 'NombreCurso', 'Creditos', 'TipoClase', 'carga_academicas.IDCargaAcademica')
-            //->where('cursos.IDCurso', '=', $codigo)
-            //->first();
-            //dd($curso);
+            //echo $curso;
+            
             if (!$curso) {
                 abort(404); // Manejar el caso en que el curso no se encuentre
             }

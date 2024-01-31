@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cursos', function (Blueprint $table) {
-            $table->string('IDCurso', 10)->primary();            $table->unsignedBigInteger('IDCargaAcademica');
+            $table->string('IDCurso', 10)->primary();            
+            $table->unsignedBigInteger('IDCargaAcademica');
             $table->string('NombreCurso', 50);
             $table->integer('Creditos');
             $table->enum('TipoClase', ['T-P', 'T', 'P']);
