@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\User;
-use App\Models\Evaluacion;
+use App\Models\Evaluaciones;
 
 class ContenidoController extends Controller
 {
     
-    public function index()
+    public function index($idCargaAcademica)
     {
         //Muestra si el usuario es un revisor
         if(Auth::user()->TipoUsuario == 'revisor'){
@@ -25,10 +25,10 @@ class ContenidoController extends Controller
             ->get();
             //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
             //dd($docentes);
-            return view('presentacion.contenido', ['docentes' => $docentes]);
+            return view('presentacion.contenido',['idCargaAcademica' => $idCargaAcademica]);
         }
     }
-    public function index2()
+    public function index2($idCargaAcademica)
     {
         //Muestra si el usuario es un revisor
         if(Auth::user()->TipoUsuario == 'revisor'){
@@ -39,7 +39,7 @@ class ContenidoController extends Controller
             ->get();
             //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
             //dd($docentes);
-            return view('presentacion.evaluaciones', ['docentes' => $docentes]);
+            return view('presentacion.evaluaciones', ['idCargaAcademica' => $idCargaAcademica]);
         }
     }
 
@@ -47,12 +47,12 @@ class ContenidoController extends Controller
     {
         // Recuperar las secciones desde el formulario o desde donde tengas definidas las secciones
         $secciones = ['Silabo', 'Avance', 'Asistencia'];
-
+        $id_carga_academica = $request->input('id_carga_academica');
         // Crear una instancia del modelo PresentacionPortafolio2
         $contenido = new Contenido();
         
         // Asignar valores a las propiedades del modelo según la selección del usuario
-        $contenido->IDCargaAcademica = 7; // Asigna el valor adecuado según tus necesidades
+        $contenido->IDCargaAcademica = $id_carga_academica; // Asigna el valor adecuado según tus necesidades
 
         foreach ($secciones as $seccion) {
             $campo = strtolower($seccion);
@@ -74,10 +74,10 @@ class ContenidoController extends Controller
     {
         // Recuperar las secciones desde el formulario o desde donde las tengas definidas
         $secciones = ['EvaluacionEntrada', 'PrimeraParcial', 'SegundaParcial', 'TerceraParcial', 'Sustitutorio'];
-
+        $id_carga_academica = $request->input('id_carga_academica');
         // Crear una instancia del modelo Evaluacion
-        $evaluacion = new Evaluacion();
-        $evaluacion->IDCargaAcademica = 7; // Asigna el valor adecuado según tus necesidades
+        $evaluacion = new Evaluaciones();
+        $evaluacion->IDCargaAcademica = $id_carga_academica; // Asigna el valor adecuado según tus necesidades
 
         foreach ($secciones as $seccion) {
             $campo = strtolower(str_replace(' ', '', $seccion));

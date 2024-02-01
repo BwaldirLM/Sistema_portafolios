@@ -18,9 +18,9 @@
             </div>
             <div class="col">
             <div class="btn-group-vertical">
-                <a href="#" class="btn btn-success p-2 m-1" >Presentación de Portafolio</a>
-                <a href="#" class="btn btn-success p-2 m-1" >Contenido</a>
-                <a href="#" class="btn btn-success p-2 m-1" >Evaluaciones</a>
+                <a href="{{ route('presentacionportafolio.index', ['idCargaAcademica' => $curso->IDCargaAcademica]) }}" class="btn btn-success p-2 m-1">Presentación de Portafolio</a>
+                <a href="{{ route('contenido.index', ['idCargaAcademica' => $curso->IDCargaAcademica]) }}" class="btn btn-success p-2 m-1" >Contenido</a>
+                <a href="{{ route('evaluaciones.index', ['idCargaAcademica' => $curso->IDCargaAcademica]) }}" class="btn btn-success p-2 m-1" >Evaluaciones</a>
             </div>
         </div>
         </div>
@@ -107,7 +107,4 @@
         @endif   
         
     </div>
-      
-    
-    
  </x-app-layout>
