@@ -2,6 +2,7 @@
 use App\Http\Controllers\CargaAcademicaController;
 use App\Http\Controllers\PresentacionPortafolioController;
 use App\Http\Controllers\ContenidoController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -18,10 +19,12 @@ use App\Http\Controllers\CursoController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
+Route::get('/', [AuthenticatedSessionController::class, 'create'])
+                ->name('login');
 
 Route::get('/carga-academica/{idDocente}', [CargaAcademicaController::class, 'mostrarCargaAcademica']);
 
