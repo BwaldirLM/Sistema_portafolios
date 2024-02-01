@@ -70,7 +70,7 @@ class CursoController extends Controller
             if (!$curso) {
                 abort(404); // Manejar el caso en que el curso no se encuentre
             }
-
+            
             // Recuperar datos de PresentacionPortafolio
             $presentacionPortafolio = PresentacionPortafolio::where('IDCargaAcademica', $curso->IDCargaAcademica)->first();
 

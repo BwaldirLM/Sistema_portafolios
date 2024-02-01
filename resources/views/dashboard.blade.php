@@ -7,9 +7,9 @@
         </h2>
     </x-slot>
 
-        <div class="mt-4 p-4 bg-secondary" style="width: 550px;">
         @if(count($docentes) > 0)
-            <div class="list-group">
+            <div class="container list-group">
+                <h1>Revisor: {{Auth::user()->Nombre}}</h1>
                 @foreach($docentes as $docente)
                     <div class="list-group-item list-group-item-action">
                         <div class="d-flex justify-content-between">
@@ -25,7 +25,7 @@
             <p>No hay docentes registrados.</p>
         @endif
     </div>
-</div>
+
     @else
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
