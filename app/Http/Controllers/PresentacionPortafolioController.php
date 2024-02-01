@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PresentacionPortafolio2;
+use App\Models\PresentacionPortafolio;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
@@ -13,7 +13,7 @@ use App\Models\User;
 
 class PresentacionPortafolioController extends Controller
 {
-    public function index()
+    public function index($idCargaAcademica)
     {
         //Muestra si el usuario es un revisor
         if(Auth::user()->TipoUsuario == 'revisor'){
@@ -24,7 +24,7 @@ class PresentacionPortafolioController extends Controller
             ->get();
             //User::where('TipoUsuario', 'Docente')->with('cursos')->get();
             //dd($docentes);
-            return view('presentacion.presentacionportafolio', ['docentes' => $docentes]);
+            return view('presentacion.presentacionportafolio', ['idCargaAcademica' => $idCargaAcademica]);
         }
     }
 
@@ -32,13 +32,12 @@ class PresentacionPortafolioController extends Controller
     {
         // Recuperar las secciones desde el formulario o desde donde tengas definidas las secciones
         $secciones = ['Caratula', 'CargaAcademica', 'FilosofiaDocente', 'CV'];
-
+        $id_carga_academica = $request->input('id_carga_academica'); 
         // Crear una instancia del modelo PresentacionPortafolio2
-        $presentacion = new PresentacionPortafolio2();
+        $presentacion = new PresentacionPortafolio();
         
         // Asignar valores a las propiedades del modelo según la selección del usuario
-        $presentacion->IDCargaAcademica = 1; // Asigna el valor adecuado según tus necesidades
-
+        $presentacion->IDCargaAcademica = $id_carga_academica;
         foreach ($secciones as $seccion) {
             $campo = strtolower($seccion);
             $valor = $request->input($campo, 'No');
